@@ -1,0 +1,9 @@
+- name: Configurar servicios básicos
+  hosts: all
+  become: true
+  tasks:
+    - name: Instalar paquetes
+      apt:
+        name: [nginx, net-tools]
+        state: present
+        update_cache: yes
