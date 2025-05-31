@@ -1,24 +1,10 @@
+
 - name: Configurar servicios básicos
-  hosts: all
+  hosts: containers
   become: yes
   tasks:
-    - name: Actualizar sistema
+    - name: Instalar herramientas básicas
       apt:
+        name: [git, curl]
+        state: present
         update_cache: yes
-        upgrade: dist
-
-    - name: Instalar Apache (solo en web)
-      apt:
-        name: apache2
-        state: present
-      when: "'web' in group_names"
-
-    - name: Instalar MariaDB (solo en db)
-      apt:
-        name: mariadb-server
-        state: present
-      when: "'db' in group_names"
-
-    - name: Instalar Netdata (solo en monitor)
-      shell: bash <(curl -Ss https://my-netdata.io/kickstart.sh) --dont-wait
-      when: "'monitor' in group_names"
